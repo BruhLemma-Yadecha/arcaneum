@@ -10,7 +10,7 @@ using std::endl;
 class ticTacToe
 {
     private:
-        const int CONVERSION_CHART[9][2] = { {0, 0}, {0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2} }; // Used to convert coords
+        const int CONVERSION_CHART[9][2] = {{0, 0}, {0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2}}; // Used to convert coords
         int winner = 0;
         int current_player = 1;
         int table[TABLE_SIDE][TABLE_SIDE] = {0};
@@ -162,9 +162,16 @@ void ticTacToe::check_for_a_winner()
 int main()
 {
     ticTacToe game0;
-    while(!game0.someone_has_won())
+    while(true)
     {
-        game0.run_turn();
+        if (!game0.someone_has_won())
+        {
+            game0.run_turn();
+        }
+        else
+        {
+            game0.print_win_screen();
+            break;
+        }
     }
-    game0.print_win_screen();
 }
