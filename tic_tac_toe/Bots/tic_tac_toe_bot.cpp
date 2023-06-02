@@ -45,7 +45,7 @@ int tic_tac_toe_bot::blank_tile_spotter_row(int particular_row)
     {
         if (table[particular_row][i] == 0)
         {
-            return this->CONVERSION_CHART
+            return this->CONVERSION_CHART;
         }
     }
 }
