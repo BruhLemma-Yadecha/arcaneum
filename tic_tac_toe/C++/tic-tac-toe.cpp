@@ -18,6 +18,7 @@ class ticTacToe
         void switch_active_player();
         void print_table();
         void check_for_a_winner();
+        void win_check();
 
     public:
         bool someone_has_won();
@@ -27,17 +28,17 @@ class ticTacToe
 
 void ticTacToe::switch_active_player()
 {
-    current_player = current_player == 1 ? 2 : 1;
+    current_player = current_player == 1 ? 4 : 1;
 }
 
 void ticTacToe::print_table()
 {
     for (int i = 0; i < TABLE_SIDE; i++)
     {
-            cout << "| ";
+            cout << "|";
             for (int j = 0; j < TABLE_SIDE; j++)
             {
-                cout << (table[i][j] != 0 ? table[i][j] == 1 ? "X" : "O" : " ");
+                cout << (table[i][j] != 0 ? table[i][j] == 1 ? " X" : " O" : "  ");
                 cout << " |";
             }
             cout << endl;
@@ -52,7 +53,8 @@ bool ticTacToe::someone_has_won ()
 void ticTacToe::print_win_screen()
 {
     print_table();
-    cout << "Player " << current_player << " won!" << endl;
+    int display_player = current_player == 1 ? 1 : 2;
+    cout << "Player " << display_player << " won!" << endl;
 }
 
 void ticTacToe::run_turn()
@@ -85,77 +87,63 @@ void ticTacToe::run_turn()
     }
 
     table[picked_row][picked_column] = current_player; // Reserving the tile
-    check_for_a_winner();
+    win_check();
     if (winner == 0)
     {
             switch_active_player(); // Continues the game if no winner has been found.
     }
 }
 
-void ticTacToe::check_for_a_winner()
+void ticTacToe::win_check()
 {
-    int row_product[TABLE_SIDE] = {1};
-    int column_product[TABLE_SIDE] = {1};
+    int row_sum[TABLE_SIDE] = {0};
+    int column_sum[TABLE_SIDE] = {0};
 
     for (int row_index = 0; row_index < TABLE_SIDE; row_index++)
     {
             for (int column_index = 0; column_index < TABLE_SIDE; column_index++)
             {
-                row_product[column_index] *= table[row_index][column_index];
-                column_product[row_index] *= table[row_index][column_index];
+                row_sum[column_index] += table[row_index][column_index];
+                column_sum[row_index] += table[row_index][column_index];
             }
     }
 
-    for (int row_checked = 0; row_checked < TABLE_SIDE; row_checked++)
+    for(int i = 0; i < TABLE_SIDE; i++)
     {
-            if (row_product[row_checked] == 1)
-            {
-                winner = 1;
-                return;
-            }
-            else if (row_product[row_checked] == 8)
-            {
-                winner = 2;
-                return;
-            }
-    }
-
-    for (int column_checked = 0; column_checked < TABLE_SIDE; column_checked++)
-    {
-            if (column_product[column_checked] == 1)
-            {
-                winner = 1;
-                return;
-            }
-            else if (column_product[column_checked] == 8)
-            {
-                winner = 2;
-                return;
-            }
+        if (row_sum[i] == 3 || column_sum[i] == 3)
+        {
+            winner = 1;
+            return;
+        }
+        if (row_sum[i] == 12 || column_sum[i] == 12)
+        {
+            winner = 2;
+            return;
+        }
     }
 
     // Diagonal check
-    int left_diagonal_product = 1;
+    int left_diagonal_sum = 0;
     for (int i = 0; i < TABLE_SIDE; i++)
     {
-            left_diagonal_product *= table[i][i];
+        left_diagonal_sum += table[i][i];
     }
 
-    int right_diagonal_product = 1;
+    int right_diagonal_sum = 0;
     for (int i = TABLE_SIDE - 1; i >= 0; i--)
     {
-            right_diagonal_product *= table[i][TABLE_SIDE - 1 - i];
+        right_diagonal_sum += table[i][TABLE_SIDE - 1 - i];
     }
 
-    if (left_diagonal_product == 1 || right_diagonal_product == 1)
+    if (left_diagonal_sum == 3 || right_diagonal_sum == 3)
     {
-            winner = 1;
-            return;
+        winner = 1;
+        return;
     }
-    else if (left_diagonal_product == 8 || right_diagonal_product == 8)
+    else if (left_diagonal_sum == 12 || right_diagonal_sum == 12)
     {
-            winner = 2;
-            return;
+        winner = 2;
+        return;
     }
 }
 
