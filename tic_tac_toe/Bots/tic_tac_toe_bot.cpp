@@ -136,6 +136,35 @@ int tic_tac_toe_bot::take_turn()
         }
     }
     // Third - 
+
+    // Fourth
+
+    // Fifth
+    int centre_coordinate = (TABLE_SIDE - 1) / 2
+    if (table[centre_coordinate][centre_coordinate] == 0)
+    {
+        return CONVERSION_CHART[centre_coordinate][centre_coordinate];
+    }
+
+    // Sixth - Corners - play an opposing corner
+    if (table[0][0] == 4) {return CONVERSION_CHART[TABLE_SIDE - 1][TABLE_SIDE - 1];}
+    if (table[0][TABLE_SIDE - 1] == 4) {return CONVERSION_CHART[TABLE_SIDE - 1][0];}
+    if (table[TABLE_SIDE - 1][0] == 4) {return CONVERSION_CHART[0][TABLE_SIDE - 1];}
+    if (table[TABLE_SIDE - 1][TABLE_SIDE - 1] == 4) {return CONVERSION_CHART[0][0];}
+
+    // Seven - play an open corner
+    if (table[0][0] == 0) {return CONVERSION_CHART[0][0];}
+    if (table[0][TABLE_SIDE - 1] == 0) {return CONVERSION_CHART[0][TABLE_SIDE - 1];}
+    if (table[TABLE_SIDE - 1][0] == 0) {return CONVERSION_CHART[TABLE_SIDE - 1][0];}
+    if (table[TABLE_SIDE - 1][TABLE_SIDE - 1] == 0) {return CONVERSION_CHART[TABLE_SIDE - 1][TABLE_SIDE - 1];}
+
+    // Eight - fill an edge
+    /// THIS IS RESTRICTED FOR 3x3
+    if (table[0][1] == 0) {return CONVERSION_CHART[0][1];}
+    if (table[1][0] == 0) {return CONVERSION_CHART[1][0];}
+    if (table[1][2] == 0) {return CONVERSION_CHART[1][2];}
+    if (table[2][1] == 0) {return CONVERSION_CHART[2][1];}
+
 }
 
 void print_table(int (table)[3][3])
