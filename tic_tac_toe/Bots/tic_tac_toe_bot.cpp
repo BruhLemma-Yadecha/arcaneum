@@ -66,7 +66,7 @@ void tic_tac_toe_bot::update_sums()
 
     for (int i = 0; i < TABLE_SIDE; i++)
     {
-        local_left_diagonal_sum *= table[i][i];
+        local_left_diagonal_sum += table[i][i];
     }
 
     for (int i = TABLE_SIDE - 1; i >= 0; i--)
@@ -109,7 +109,7 @@ int tic_tac_toe_bot::take_turn()
         }
         if (right_diagonal_sum == 2)
         {
-            return table[0][TABLE_SIDE] == 0 ? TABLE_SIDE : ((TABLE_SIDE - 1) * TABLE_SIDE) + 1; // Checks the top right and bottom left.
+            return table[0][TABLE_SIDE - 1] == 0 ? TABLE_SIDE : ((TABLE_SIDE - 1) * TABLE_SIDE) + 1; // Checks the top right and bottom left.
         }
     }
 
@@ -130,7 +130,9 @@ int tic_tac_toe_bot::take_turn()
         }
         if (right_diagonal_sum == 8)
         {
-            return table[0][TABLE_SIDE] == 0 ? TABLE_SIDE : ((TABLE_SIDE - 1) * TABLE_SIDE) + 1; // Checks the top right and bottom left.
+            printf("Replacing %d\n", table[0][TABLE_SIDE]);
+            return table[0][TABLE_SIDE - 1] == 0 ? TABLE_SIDE : ((TABLE_SIDE - 1) * TABLE_SIDE) + 1; // Checks the top right and bottom left.
+            
         }
     }
     // Third - 
@@ -155,9 +157,9 @@ int main()
 {
     const int CONVERSION_CHART[9][2] = {{0, 0}, {0, 1}, {0, 2}, {1, 0}, {1, 1}, {1, 2}, {2, 0}, {2, 1}, {2, 2}}; // Used to convert coords
     int table[3][3] = {
-    0,0,0,
-    0,0,0,
-    0,0,0};
+    {0,0,0},
+    {4,4,0},
+    {0,0,0}};
     print_table(table);
     tic_tac_toe_bot bot0(table);
     int picked_tile = bot0.take_turn();
